@@ -1,0 +1,410 @@
+{
+  "_instrucciones": "Editá este archivo cuando cambies productos en la tienda. Subilo a Netlify para que el asistente se actualice. Formato de precio: número sin puntos ni comas (ej: 533000). Si no tiene precio fijo, usá rangeMin y rangeMax. Si es a pedido, usá apedido:true.",
+  "_actualizado": "2026-04-09",
+
+  "tienda": {
+    "url": "https://www.maresiasdeco.com.ar",
+    "instagram": "https://www.instagram.com/maresias.deco",
+    "whatsapp": "+541136927855",
+    "logo": "https://d22fxaf9t8d39k.cloudfront.net/27e2c99dfefbd1e6a3dbed5e9483f0b8a442abe30aa4e4022186c7a3a0c4bab5254108.png",
+    "promo": "20% OFF pagando en efectivo o transferencia | Hasta 6 cuotas sin interés"
+  },
+
+  "categorias": {
+    "living": {
+      "label": "Living",
+      "url": "https://www.maresiasdeco.com.ar/muebles",
+      "ambientes": ["living"],
+      "items": [
+        {
+          "id": 1,
+          "nombre": "Mesa ratona petiribi",
+          "cat": "Mesas ratonas",
+          "precio": null,
+          "apedido": true,
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/4b544b9d93b7cf623d1b65de068d1efbd715f7957d8c420426875ca336c75fe8254108.jpg",
+          "url": "https://www.maresiasdeco.com.ar/muebles/mesas/ratonas/mesa-ratona-petiribi",
+          "ambientes": ["living", "comedor"]
+        },
+        {
+          "id": 2,
+          "nombre": "Lámpara Rocinha",
+          "cat": "Iluminación",
+          "precio": 245200,
+          "transfer": 196160,
+          "cuotas": "6 cuotas s/i $40.867",
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/222f591acb04094fd84ddaa5bc15af3365a5b569114aa132af4ac34e04081683254108.png",
+          "url": "https://www.maresiasdeco.com.ar/iluminacion/lamparas-de-techo/lampara-rocinha",
+          "ambientes": ["living", "comedor", "dormitorio"]
+        },
+        {
+          "id": 3,
+          "nombre": "Alfombra Savara",
+          "cat": "Alfombras",
+          "precio": 373500,
+          "transfer": 298800,
+          "cuotas": "6 cuotas s/i $62.250",
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/e9236d80fda3405eba77114795a1b2a22e6c9780f935b425dfafced1bb6c176e254108.jpg",
+          "url": "https://www.maresiasdeco.com.ar/alfombras/alfombra-savara",
+          "ambientes": ["living", "dormitorio", "comedor", "escritorio"]
+        },
+        {
+          "id": 4,
+          "nombre": "Alfombra Sabang",
+          "cat": "Alfombras",
+          "precio": 438600,
+          "transfer": 350880,
+          "cuotas": "6 cuotas s/i $73.100",
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/aa98534e0b48f345702aec8f1a4ad5c7cde0fb4cbfcb1f024c12f574ccd89e95254108.jpg",
+          "url": "https://www.maresiasdeco.com.ar/alfombras/alfombra-sabang",
+          "ambientes": ["living", "dormitorio", "comedor"]
+        },
+        {
+          "id": 5,
+          "nombre": "Sillones y camastros",
+          "cat": "Sillones",
+          "precio": null,
+          "rangeMin": 320000,
+          "rangeMax": 1200000,
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/b35aadc99f019e7d2ff6c13033e5845cbc8f48169705308fffa21f7d5c00c123254108.png",
+          "url": "https://www.maresiasdeco.com.ar/muebles/sillones-y-camastros",
+          "ambientes": ["living"]
+        },
+        {
+          "id": 6,
+          "nombre": "Estanterías y repisas",
+          "cat": "Muebles",
+          "precio": null,
+          "rangeMin": 120000,
+          "rangeMax": 580000,
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/fbcf5458520e3b9721a0bdd2e9971e6838a4c7b8ec6c3e60e49e3add48f77990254108.png",
+          "url": "https://www.maresiasdeco.com.ar/muebles/estanterias-bibliotecas-y-repisas",
+          "ambientes": ["living", "escritorio", "comedor"]
+        }
+      ]
+    },
+
+    "dormitorio": {
+      "label": "Dormitorio",
+      "url": "https://www.maresiasdeco.com.ar/para-tu-dpto-en-alquiler/dormitorio",
+      "ambientes": ["dormitorio"],
+      "items": [
+        {
+          "id": 10,
+          "nombre": "Mesa de luz Pipa de Paraíso",
+          "cat": "Mesas de luz",
+          "precio": 533000,
+          "transfer": 426400,
+          "cuotas": "6 cuotas s/i $88.833",
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/250d800f2224504405e56ea5b7d68b6cf884845e73229f00cc23a1425acbc9d1254108.png",
+          "url": "https://www.maresiasdeco.com.ar/muebles/mesas-de-luz/mesa-de-luz-pipa-de-paraiso",
+          "ambientes": ["dormitorio"]
+        },
+        {
+          "id": 11,
+          "nombre": "Respaldos de cama",
+          "cat": "Dormitorio",
+          "precio": null,
+          "rangeMin": 280000,
+          "rangeMax": 750000,
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/11aae3c4a7169d8aedc333c4a5e8fd2b48c4395e87cd4a038e9443477f091b29254108.png",
+          "url": "https://www.maresiasdeco.com.ar/muebles/respaldos-de-cama",
+          "ambientes": ["dormitorio"]
+        },
+        {
+          "id": 12,
+          "nombre": "Alfombra Savara",
+          "cat": "Alfombras",
+          "precio": 373500,
+          "transfer": 298800,
+          "cuotas": "6 cuotas s/i $62.250",
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/e9236d80fda3405eba77114795a1b2a22e6c9780f935b425dfafced1bb6c176e254108.jpg",
+          "url": "https://www.maresiasdeco.com.ar/alfombras/alfombra-savara",
+          "ambientes": ["living", "dormitorio", "comedor", "escritorio"]
+        },
+        {
+          "id": 13,
+          "nombre": "Veladores y lámparas de mesa",
+          "cat": "Iluminación",
+          "precio": null,
+          "rangeMin": 90000,
+          "rangeMax": 320000,
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/f033c92e59692d4e7333062f8344ba0cf9dd8de9482683ad49d6a8c219f73968254108.png",
+          "url": "https://www.maresiasdeco.com.ar/iluminacion/lamparas-de-mesa-y-veladores",
+          "ambientes": ["dormitorio", "escritorio"]
+        }
+      ]
+    },
+
+    "comedor": {
+      "label": "Comedor",
+      "url": "https://www.maresiasdeco.com.ar/para-tu-dpto-en-alquiler/living-y-comedor",
+      "ambientes": ["comedor"],
+      "items": [
+        {
+          "id": 20,
+          "nombre": "Mesas de comedor",
+          "cat": "Comedor",
+          "precio": null,
+          "rangeMin": 450000,
+          "rangeMax": 1800000,
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/6f25c5d9fcafcea8c0ae573776a09081394f64dec5aed229bf4b6e6066b948a8254108.png",
+          "url": "https://www.maresiasdeco.com.ar/muebles/mesas/de-comedor",
+          "ambientes": ["comedor"]
+        },
+        {
+          "id": 21,
+          "nombre": "Sillas",
+          "cat": "Muebles",
+          "precio": null,
+          "rangeMin": 95000,
+          "rangeMax": 380000,
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/fbcf5458520e3b9721a0bdd2e9971e6838a4c7b8ec6c3e60e49e3add48f77990254108.png",
+          "url": "https://www.maresiasdeco.com.ar/muebles/sillas",
+          "ambientes": ["comedor"]
+        },
+        {
+          "id": 22,
+          "nombre": "Barras y mesas altas",
+          "cat": "Muebles",
+          "precio": null,
+          "rangeMin": 280000,
+          "rangeMax": 750000,
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/fbcf5458520e3b9721a0bdd2e9971e6838a4c7b8ec6c3e60e49e3add48f77990254108.png",
+          "url": "https://www.maresiasdeco.com.ar/muebles/mesas/barras-y-mesas-altas",
+          "ambientes": ["comedor"]
+        },
+        {
+          "id": 23,
+          "nombre": "Lámpara Rocinha",
+          "cat": "Iluminación",
+          "precio": 245200,
+          "transfer": 196160,
+          "cuotas": "6 cuotas s/i $40.867",
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/222f591acb04094fd84ddaa5bc15af3365a5b569114aa132af4ac34e04081683254108.png",
+          "url": "https://www.maresiasdeco.com.ar/iluminacion/lamparas-de-techo/lampara-rocinha",
+          "ambientes": ["living", "comedor", "dormitorio"]
+        },
+        {
+          "id": 24,
+          "nombre": "Alfombra Savara",
+          "cat": "Alfombras",
+          "precio": 373500,
+          "transfer": 298800,
+          "cuotas": "6 cuotas s/i $62.250",
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/e9236d80fda3405eba77114795a1b2a22e6c9780f935b425dfafced1bb6c176e254108.jpg",
+          "url": "https://www.maresiasdeco.com.ar/alfombras/alfombra-savara",
+          "ambientes": ["living", "dormitorio", "comedor", "escritorio"]
+        }
+      ]
+    },
+
+    "escritorio": {
+      "label": "Escritorio",
+      "url": "https://www.maresiasdeco.com.ar/muebles",
+      "ambientes": ["escritorio"],
+      "items": [
+        {
+          "id": 30,
+          "nombre": "Estanterías y repisas",
+          "cat": "Muebles",
+          "precio": null,
+          "rangeMin": 120000,
+          "rangeMax": 580000,
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/fbcf5458520e3b9721a0bdd2e9971e6838a4c7b8ec6c3e60e49e3add48f77990254108.png",
+          "url": "https://www.maresiasdeco.com.ar/muebles/estanterias-bibliotecas-y-repisas",
+          "ambientes": ["living", "escritorio", "comedor"]
+        },
+        {
+          "id": 31,
+          "nombre": "Lámparas de pie",
+          "cat": "Iluminación",
+          "precio": null,
+          "rangeMin": 150000,
+          "rangeMax": 420000,
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/f033c92e59692d4e7333062f8344ba0cf9dd8de9482683ad49d6a8c219f73968254108.png",
+          "url": "https://www.maresiasdeco.com.ar/iluminacion/lamparas-de-pie",
+          "ambientes": ["living", "escritorio", "dormitorio"]
+        },
+        {
+          "id": 32,
+          "nombre": "Bancos y puff",
+          "cat": "Muebles",
+          "precio": null,
+          "rangeMin": 95000,
+          "rangeMax": 350000,
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/fbcf5458520e3b9721a0bdd2e9971e6838a4c7b8ec6c3e60e49e3add48f77990254108.png",
+          "url": "https://www.maresiasdeco.com.ar/muebles/bancos-y-puff",
+          "ambientes": ["escritorio", "dormitorio"]
+        },
+        {
+          "id": 33,
+          "nombre": "Alfombra Savara",
+          "cat": "Alfombras",
+          "precio": 373500,
+          "transfer": 298800,
+          "cuotas": "6 cuotas s/i $62.250",
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/e9236d80fda3405eba77114795a1b2a22e6c9780f935b425dfafced1bb6c176e254108.jpg",
+          "url": "https://www.maresiasdeco.com.ar/alfombras/alfombra-savara",
+          "ambientes": ["living", "dormitorio", "comedor", "escritorio"]
+        }
+      ]
+    },
+
+    "exterior": {
+      "label": "Exterior",
+      "url": "https://www.maresiasdeco.com.ar/para-tu-dpto-en-alquiler/espacio-exterior",
+      "ambientes": ["exterior"],
+      "items": [
+        {
+          "id": 40,
+          "nombre": "Hamacas y sillones colgantes",
+          "cat": "Exterior",
+          "precio": null,
+          "rangeMin": 280000,
+          "rangeMax": 850000,
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/3a48c2260fec9804363f7a3e6f34e6ba84751a6e900992d0a0c47ef715dc7f9d254108.png",
+          "url": "https://www.maresiasdeco.com.ar/muebles/hamacas-y-sillones-colgantes",
+          "ambientes": ["exterior"]
+        },
+        {
+          "id": 41,
+          "nombre": "Reposeras",
+          "cat": "Exterior",
+          "precio": null,
+          "rangeMin": 320000,
+          "rangeMax": 900000,
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/b35aadc99f019e7d2ff6c13033e5845cbc8f48169705308fffa21f7d5c00c123254108.png",
+          "url": "https://www.maresiasdeco.com.ar/muebles/reposeras",
+          "ambientes": ["exterior"]
+        },
+        {
+          "id": 42,
+          "nombre": "Banquetas y taburetes",
+          "cat": "Muebles",
+          "precio": null,
+          "rangeMin": 85000,
+          "rangeMax": 260000,
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/fbcf5458520e3b9721a0bdd2e9971e6838a4c7b8ec6c3e60e49e3add48f77990254108.png",
+          "url": "https://www.maresiasdeco.com.ar/muebles/banquetas-y-taburetes",
+          "ambientes": ["exterior", "comedor"]
+        }
+      ]
+    },
+
+    "entrada": {
+      "label": "Entrada / Hall",
+      "url": "https://www.maresiasdeco.com.ar/para-tu-dpto-en-alquiler/hall-de-ingreso",
+      "ambientes": ["entrada"],
+      "items": [
+        {
+          "id": 50,
+          "nombre": "Percheros",
+          "cat": "Muebles",
+          "precio": null,
+          "rangeMin": 85000,
+          "rangeMax": 220000,
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/fbcf5458520e3b9721a0bdd2e9971e6838a4c7b8ec6c3e60e49e3add48f77990254108.png",
+          "url": "https://www.maresiasdeco.com.ar/muebles/percheros",
+          "ambientes": ["entrada"]
+        },
+        {
+          "id": 51,
+          "nombre": "Recibidores y consolas",
+          "cat": "Muebles",
+          "precio": null,
+          "rangeMin": 250000,
+          "rangeMax": 680000,
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/fbcf5458520e3b9721a0bdd2e9971e6838a4c7b8ec6c3e60e49e3add48f77990254108.png",
+          "url": "https://www.maresiasdeco.com.ar/muebles/recibidores-y-consolas",
+          "ambientes": ["entrada"]
+        },
+        {
+          "id": 52,
+          "nombre": "Lámparas de pared",
+          "cat": "Iluminación",
+          "precio": null,
+          "rangeMin": 80000,
+          "rangeMax": 280000,
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/f033c92e59692d4e7333062f8344ba0cf9dd8de9482683ad49d6a8c219f73968254108.png",
+          "url": "https://www.maresiasdeco.com.ar/iluminacion/lamparas-de-pared",
+          "ambientes": ["entrada", "living", "escritorio"]
+        },
+        {
+          "id": 53,
+          "nombre": "Alfombra Savara",
+          "cat": "Alfombras",
+          "precio": 373500,
+          "transfer": 298800,
+          "cuotas": "6 cuotas s/i $62.250",
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/e9236d80fda3405eba77114795a1b2a22e6c9780f935b425dfafced1bb6c176e254108.jpg",
+          "url": "https://www.maresiasdeco.com.ar/alfombras/alfombra-savara",
+          "ambientes": ["living", "dormitorio", "comedor", "escritorio"]
+        }
+      ]
+    },
+
+    "alquiler": {
+      "label": "Depto en alquiler",
+      "url": "https://www.maresiasdeco.com.ar/para-tu-dpto-en-alquiler",
+      "ambientes": ["alquiler"],
+      "items": [
+        {
+          "id": 60,
+          "nombre": "Lámpara Rocinha",
+          "cat": "Iluminación",
+          "precio": 245200,
+          "transfer": 196160,
+          "cuotas": "6 cuotas s/i $40.867",
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/222f591acb04094fd84ddaa5bc15af3365a5b569114aa132af4ac34e04081683254108.png",
+          "url": "https://www.maresiasdeco.com.ar/iluminacion/lamparas-de-techo/lampara-rocinha",
+          "ambientes": ["alquiler", "living", "comedor"]
+        },
+        {
+          "id": 61,
+          "nombre": "Alfombra Savara",
+          "cat": "Alfombras",
+          "precio": 373500,
+          "transfer": 298800,
+          "cuotas": "6 cuotas s/i $62.250",
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/e9236d80fda3405eba77114795a1b2a22e6c9780f935b425dfafced1bb6c176e254108.jpg",
+          "url": "https://www.maresiasdeco.com.ar/alfombras/alfombra-savara",
+          "ambientes": ["alquiler", "living", "dormitorio"]
+        },
+        {
+          "id": 62,
+          "nombre": "Percheros",
+          "cat": "Muebles",
+          "precio": null,
+          "rangeMin": 85000,
+          "rangeMax": 220000,
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/fbcf5458520e3b9721a0bdd2e9971e6838a4c7b8ec6c3e60e49e3add48f77990254108.png",
+          "url": "https://www.maresiasdeco.com.ar/muebles/percheros",
+          "ambientes": ["alquiler", "entrada"]
+        },
+        {
+          "id": 63,
+          "nombre": "Lámparas de pie",
+          "cat": "Iluminación",
+          "precio": null,
+          "rangeMin": 150000,
+          "rangeMax": 420000,
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/f033c92e59692d4e7333062f8344ba0cf9dd8de9482683ad49d6a8c219f73968254108.png",
+          "url": "https://www.maresiasdeco.com.ar/iluminacion/lamparas-de-pie",
+          "ambientes": ["alquiler", "living", "escritorio"]
+        },
+        {
+          "id": 64,
+          "nombre": "Mesa de luz Pipa de Paraíso",
+          "cat": "Mesas de luz",
+          "precio": 533000,
+          "transfer": 426400,
+          "cuotas": "6 cuotas s/i $88.833",
+          "imagen": "https://d22fxaf9t8d39k.cloudfront.net/250d800f2224504405e56ea5b7d68b6cf884845e73229f00cc23a1425acbc9d1254108.png",
+          "url": "https://www.maresiasdeco.com.ar/muebles/mesas-de-luz/mesa-de-luz-pipa-de-paraiso",
+          "ambientes": ["alquiler", "dormitorio"]
+        }
+      ]
+    }
+  }
+}

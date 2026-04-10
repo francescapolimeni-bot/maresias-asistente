@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Asistente Maresias Deco</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --sand:#F7F2EA;--sand-d:#EDE6D8;--sand-dd:#E3DAC8;
+  --bark:#2E1F14;--bark-m:#5C3D2A;--bark-l:#9B7055;--bark-xl:#C4A882;
+  --leaf:#3D5C35;--leaf-l:#D4E8CC;--leaf-ll:#EBF5E6;
+  --amber:#7A5A0A;--amber-l:#FBF0D0;
+  --cream:#FEFCF7;--white:#FFFFFF;
+  --text:#1E140A;--text-m:#5C4A38;--text-l:#9C8470;--text-xl:#C4B0A0;
+  --bdr:rgba(46,31,20,.1);--bdr-m:rgba(46,31,20,.18);--bdr-s:rgba(46,31,20,.28);
+  --r:16px;--rs:10px;--rxs:6px;
+  --shadow:0 2px 12px rgba(46,31,20,.07);
+}
+html,body{height:100%;background:var(--sand);font-family:'DM Sans',sans-serif;color:var(--text);-webkit-font-smoothing:antialiased}
+#app{display:flex;flex-direction:column;height:100vh;max-width:480px;margin:0 auto;background:var(--cream);position:relative}
+
+/* HEADER */
+#hdr{padding:12px 16px;border-bottom:.5px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;background:var(--cream);flex-shrink:0;position:sticky;top:0;z-index:10}
+#hdr-l{display:flex;align-items:center;gap:10px}
+#logo{width:36px;height:36px;border-radius:50%;overflow:hidden;background:var(--sand);border:.5px solid var(--bdr-m);flex-shrink:0}
+#logo img{width:100%;height:100%;object-fit:contain}
+#hdr-name{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:500;color:var(--bark);letter-spacing:.03em}
+#hdr-sub{font-size:10px;color:var(--text-l);margin-top:1px}
+#wa{display:flex;align-items:center;gap:4px;padding:6px 12px;border-radius:20px;border:.5px solid var(--leaf);background:var(--leaf-ll);color:var(--leaf);font-size:11px;font-weight:500;text-decoration:none;white-space:nowrap;transition:all .15s;font-family:'DM Sans',sans-serif}
+#wa:hover{background:var(--leaf-l)}
+
+/* MESSAGES */
+#msgs{flex:1;overflow-y:auto;padding:18px 15px;display:flex;flex-direction:column;gap:14px;scroll-behavior:smooth}
+#msgs::-webkit-scrollbar{width:3px}
+#msgs::-webkit-scrollbar-thumb{background:var(--bdr-m);border-radius:2px}
+
+.msg{max-width:92%;display:flex;flex-direction:column;gap:5px}
+.msg.u{align-self:flex-end;align-items:flex-end;animation:sR .2s ease}
+.msg.b{align-self:flex-start;align-items:flex-start;animation:sL .2s ease}
+@keyframes sL{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
+@keyframes sR{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:translateX(0)}}
+
+.bbl{padding:10px 14px;border-radius:var(--r);font-size:13px;line-height:1.7;color:var(--text)}
+.msg.u .bbl{background:var(--bark);color:var(--sand);border-bottom-right-radius:4px;font-size:12px}
+.msg.b .bbl{background:var(--white);border:.5px solid var(--bdr);border-bottom-left-radius:4px;box-shadow:var(--shadow)}
+
+/* CHIPS */
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:3px}
+.chip{padding:5px 12px;border:.5px solid var(--bdr-m);border-radius:20px;font-size:11px;cursor:pointer;background:var(--cream);color:var(--text-m);transition:all .15s;font-family:'DM Sans',sans-serif}
+.chip:hover{background:var(--sand-d);color:var(--bark);border-color:var(--bark-l)}
+
+/* MOMENT CARDS — primer paso emocional */
+.mcards{display:flex;flex-direction:column;gap:8px;margin-top:6px;width:100%}
+.mcard{border:.5px solid var(--bdr);border-radius:var(--rs);padding:13px 15px;cursor:pointer;background:var(--white);transition:all .2s;display:flex;align-items:flex-start;gap:12px;box-shadow:var(--shadow)}
+.mcard:hover{border-color:var(--bark-l);background:var(--sand);transform:translateY(-1px);box-shadow:0 4px 16px rgba(46,31,20,.1)}
+.mc-icon{font-size:22px;flex-shrink:0;margin-top:1px}
+.mc-t{font-size:13px;font-weight:500;color:var(--bark);line-height:1.3}
+.mc-d{font-size:11px;color:var(--text-l);margin-top:3px;line-height:1.5}
+
+/* FOLLOWUP QUESTION — para "algo que quiero cambiar" */
+.fq-wrap{display:flex;flex-direction:column;gap:6px;margin-top:6px;width:100%}
+.fq-label{font-size:11px;color:var(--text-l);font-style:italic;padding:0 2px}
+.fq-opts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.fq-btn{padding:9px 10px;border:.5px solid var(--bdr);border-radius:var(--rs);font-size:12px;cursor:pointer;background:var(--white);color:var(--text-m);transition:all .15s;text-align:left;font-family:'DM Sans',sans-serif;line-height:1.3}
+.fq-btn:hover{background:var(--sand);color:var(--bark);border-color:var(--bark-l)}
+.fq-btn.wide{grid-column:1/-1}
+
+/* DIAGNOSTIC — para "quiero que se vea mejor" */
+.diag{display:flex;flex-direction:column;gap:8px;margin-top:6px;width:100%}
+.diag-q{font-size:12px;color:var(--text-m);font-weight:500;padding:0 2px}
+.diag-opts{display:flex;flex-wrap:wrap;gap:5px}
+.diag-opt{padding:6px 12px;border:.5px solid var(--bdr-m);border-radius:20px;font-size:11px;cursor:pointer;background:var(--white);color:var(--text-m);transition:all .15s;font-family:'DM Sans',sans-serif}
+.diag-opt:hover,.diag-opt.sel{background:var(--sand-d);color:var(--bark);border-color:var(--bark-l)}
+.diag-next{margin-top:6px;padding:8px 18px;border:none;border-radius:20px;background:var(--bark);color:var(--sand);font-size:12px;cursor:pointer;font-weight:500;font-family:'DM Sans',sans-serif;display:none;transition:background .15s}
+.diag-next:hover{background:var(--bark-m)}
+
+/* AMBIENT SELECTOR */
+.agrid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px;width:100%}
+.abtn{padding:9px 11px;border:.5px solid var(--bdr);border-radius:var(--rs);font-size:12px;cursor:pointer;background:var(--white);color:var(--text-m);transition:all .15s;text-align:left;font-family:'DM Sans',sans-serif}
+.abtn:hover,.abtn.sel{background:var(--sand-d);color:var(--bark);border-color:var(--bark-l);font-weight:500}
+.confirm{margin-top:8px;padding:9px 20px;border:none;border-radius:20px;background:var(--bark);color:var(--sand);font-size:12px;cursor:pointer;font-weight:500;font-family:'DM Sans',sans-serif;transition:background .15s}
+.confirm:hover{background:var(--bark-m)}
+
+/* PRODUCT GRID */
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px;width:100%}
+.pcard{border:.5px solid var(--bdr);border-radius:var(--rs);background:var(--white);overflow:hidden;transition:all .15s;display:flex;flex-direction:column;box-shadow:var(--shadow)}
+.pcard:hover{border-color:var(--bark-l);transform:translateY(-1px);box-shadow:0 4px 14px rgba(46,31,20,.1)}
+.pimg{width:100%;aspect-ratio:1/1;object-fit:cover;background:var(--sand-d);display:block}
+.pinfo{padding:8px 10px;display:flex;flex-direction:column;gap:2px;flex:1}
+.pcat{font-size:9px;color:var(--text-xl);text-transform:uppercase;letter-spacing:.6px}
+.pname{font-size:11px;font-weight:500;color:var(--bark);line-height:1.35;margin-top:1px}
+.pprice{font-size:12px;color:var(--text);margin-top:3px;font-weight:500}
+.ptransfer{font-size:10px;color:var(--leaf);font-weight:500}
+.pdesc{font-size:10px;color:var(--text-l);margin-top:1px;line-height:1.4}
+.pcuotas{font-size:9px;color:var(--text-l)}
+.apedido{font-size:10px;color:var(--amber);font-style:italic;margin-top:2px}
+.promo-tag{display:inline-block;background:var(--amber-l);color:var(--amber);font-size:9px;padding:2px 6px;border-radius:4px;font-weight:500;margin-top:2px;border:.5px solid rgba(122,90,10,.2)}
+.pbtns{display:flex;gap:4px;margin-top:7px;flex-wrap:wrap}
+.padd{font-size:10px;padding:3px 9px;border:.5px solid var(--bdr-m);border-radius:10px;background:transparent;color:var(--text-m);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
+.padd:hover{background:var(--sand);border-color:var(--bark-l)}
+.pver{font-size:10px;padding:3px 9px;border:.5px solid var(--leaf);border-radius:10px;background:transparent;color:var(--leaf);text-decoration:none;display:inline-block;transition:all .15s}
+.pver:hover{background:var(--leaf-ll)}
+
+/* SINGLE RECOMMENDATION — para "algo que quiero cambiar" */
+.rec-single{border:.5px solid var(--bdr);border-radius:var(--rs);background:var(--white);overflow:hidden;width:100%;box-shadow:var(--shadow);margin-top:6px}
+.rec-single .pimg{aspect-ratio:16/9;object-fit:cover}
+.rec-single .pinfo{padding:12px 14px}
+.rec-single .pname{font-size:13px}
+.rec-single .pprice{font-size:14px}
+
+.ver-mas{display:inline-flex;align-items:center;gap:4px;margin-top:9px;padding:7px 15px;border:.5px solid var(--bdr-m);border-radius:20px;font-size:11px;color:var(--text-m);text-decoration:none;background:var(--cream);transition:all .15s}
+.ver-mas:hover{background:var(--sand-d);color:var(--bark)}
+.nbtn{margin-top:8px;padding:7px 15px;border:.5px solid var(--bark-l);border-radius:20px;background:transparent;color:var(--bark);font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
+.nbtn:hover{background:var(--sand)}
+
+/* BUDGET */
+.brow{display:flex;flex-direction:column;gap:5px;margin-top:6px;width:100%}
+.bopt{padding:9px 13px;border:.5px solid var(--bdr);border-radius:var(--rs);font-size:12px;cursor:pointer;background:var(--white);color:var(--text-m);transition:all .15s;text-align:left;font-family:'DM Sans',sans-serif}
+.bopt:hover{background:var(--sand-d);color:var(--bark);border-color:var(--bark-l)}
+
+/* CART */
+#cart-bar{border-top:.5px solid var(--bdr);padding:9px 15px;background:var(--sand-d);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+#cart-info{font-size:11px;color:var(--text-m)}
+#cart-btn{font-size:11px;padding:4px 12px;border:.5px solid var(--bdr-m);border-radius:14px;background:var(--cream);color:var(--text);cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s}
+#cart-btn:hover{background:var(--white)}
+
+/* FOOTER */
+#footer{border-top:.5px solid var(--bdr);padding:9px 15px;background:var(--sand);flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.flinks{display:flex;align-items:center;gap:14px}
+.flinks a{font-size:10px;color:var(--text-l);text-decoration:none;display:flex;align-items:center;gap:3px;transition:color .15s}
+.flinks a:hover{color:var(--bark)}
+.fpromo{font-size:9px;color:var(--text-l);font-style:italic;text-align:right;max-width:160px;line-height:1.4}
+
+/* INPUT */
+#inp{border-top:.5px solid var(--bdr);padding:10px 13px;display:flex;gap:7px;flex-shrink:0;background:var(--cream)}
+#txt{flex:1;border:.5px solid var(--bdr);border-radius:20px;padding:8px 14px;font-size:13px;background:var(--sand);color:var(--text);outline:none;font-family:'DM Sans',sans-serif;transition:all .15s}
+#txt:focus{border-color:var(--bark-l);background:var(--white);box-shadow:0 0 0 3px rgba(156,112,85,.1)}
+#txt::placeholder{color:var(--text-xl)}
+#sbtn{width:36px;height:36px;border-radius:50%;border:none;background:var(--bark);cursor:pointer;color:var(--sand);font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s}
+#sbtn:hover{background:var(--bark-m)}
+
+/* TYPING */
+.typing{display:flex;gap:5px;padding:11px 14px;align-items:center}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--bark-xl);animation:bnc 1.4s infinite ease-in-out}
+.dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
+@keyframes bnc{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1}}
+
+/* WA ESCALATION */
+.wa-escalate{display:flex;align-items:center;gap:9px;padding:11px 13px;border:.5px solid var(--leaf);border-radius:var(--rs);background:var(--leaf-ll);margin-top:6px;cursor:pointer;text-decoration:none;transition:all .15s;width:100%}
+.wa-escalate:hover{background:var(--leaf-l)}
+.wa-escalate svg{flex-shrink:0}
+.wa-escalate-text p:first-child{font-size:12px;font-weight:500;color:var(--leaf)}
+.wa-escalate-text p:last-child{font-size:10px;color:var(--leaf);opacity:.8;margin-top:1px}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="hdr">
+    <div id="hdr-l">
+      <div id="logo"><img id="logo-img" src="" alt="Maresias"/></div>
+      <div><div id="hdr-name">Maresias Deco</div><div id="hdr-sub">Asesoramiento en decoración</div></div>
+    </div>
+    <a id="wa" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp
+    </a>
+  </div>
+
+  <div id="msgs" role="log" aria-live="polite"></div>
+
+  <div id="cart-bar">
+    <span id="cart-info">Lista vacía</span>
+    <button id="cart-btn" onclick="showCart()">Ver lista</button>
+  </div>
+
+  <div id="footer">
+    <div class="flinks">
+      <a id="fweb" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Tienda
+      </a>
+      <a id="fig" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        Instagram
+      </a>
+    </div>
+    <span class="fpromo" id="fpromo"></span>
+  </div>
+
+  <div id="inp">
+    <input id="txt" type="text" placeholder="Escribí tu consulta..." onkeydown="if(event.key==='Enter')send()"/>
+    <button id="sbtn" onclick="send()" aria-label="Enviar">↑</button>
+  </div>
+</div>
+
+<script>
+const CATALOGO_URL = './catalogo.json';
+let CAT={}, TIENDA={}, cart=[], aiHistory=[], lastChips=[], currentCat=null, userMode=null, waUrl='https://wa.me/541136927855';
+
+const BUDGETS=[
+  {label:'Hasta $200.000',max:200000},
+  {label:'$200.000 a $500.000',min:200000,max:500000},
+  {label:'$500.000 a $1.000.000',min:500000,max:1000000},
+  {label:'Más de $1.000.000',min:1000000},
+];
+
+const FAQS={
+  envio:'Enviamos a todo el país. Los tiempos de entrega están en cada producto. Para muebles grandes, nuestro equipo coordina el despacho directamente con vos.',
+  pago:'Tenés 20% de descuento pagando en efectivo o transferencia. Con tarjeta de crédito, hasta 6 cuotas sin interés. Esas promociones no se combinan.',
+  personalizacion:'Muchos productos se pueden personalizar en tamaño, tipo de madera o terminación. Consultanos antes de comprar y te asesoramos sin compromiso.',
+  como_comprar:'Podés comprar desde la tienda online o por mensaje. Una vez confirmado el pedido, te mandamos datos de pago y tiempos de entrega.',
+  mayoristas:'Trabajamos con revendedores y decoradores. Registrate como mayorista en el sitio para precios especiales.',
+  garantia:'Todos los productos tienen garantía de fabricación. Si algo llega en malas condiciones, lo resolvemos.',
+};
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+async function init(){
+  try{
+    const r=await fetch(CATALOGO_URL+'?v='+Date.now());
+    const d=await r.json();
+    CAT=d.categorias; TIENDA=d.tienda;
+    document.getElementById('logo-img').src=TIENDA.logo;
+    waUrl='https://wa.me/'+TIENDA.whatsapp.replace(/\D/g,'');
+    document.getElementById('wa').href=waUrl;
+    document.getElementById('fweb').href=TIENDA.url;
+    document.getElementById('fig').href=TIENDA.instagram;
+    document.getElementById('fpromo').textContent=TIENDA.promo;
+  }catch(e){
+    document.getElementById('logo-img').src='https://d22fxaf9t8d39k.cloudfront.net/27e2c99dfefbd1e6a3dbed5e9483f0b8a442abe30aa4e4022186c7a3a0c4bab5254108.png';
+    document.getElementById('fweb').href='https://www.maresiasdeco.com.ar';
+    document.getElementById('fig').href='https://www.instagram.com/maresias.deco';
+  }
+  welcome();
+}
+
+// ─── UTILS ───────────────────────────────────────────────────────────────────
+const msgsEl=document.getElementById('msgs');
+const txtEl=document.getElementById('txt');
+const fmt=n=>n.toLocaleString('es-AR');
+const scroll=()=>{msgsEl.scrollTop=msgsEl.scrollHeight};
+
+function addMsg(role,html,chips,extra){
+  const div=document.createElement('div');
+  div.className=`msg ${role==='u'?'u':'b'}`;
+  if(html){
+    const b=document.createElement('div');
+    b.className='bbl';
+    b.innerHTML=html.replace(/\n/g,'<br>');
+    div.appendChild(b);
+  }
+  if(chips&&chips.length){
+    lastChips=[...chips];
+    const row=document.createElement('div');
+    row.className='chips';
+    chips.forEach(c=>{
+      const btn=document.createElement('button');
+      btn.className='chip';btn.textContent=c;
+      btn.onclick=()=>{txtEl.value=c;send();};
+      row.appendChild(btn);
+    });
+    div.appendChild(row);
+  }
+  if(extra)div.appendChild(extra);
+  msgsEl.appendChild(div);
+  scroll();
+}
+
+function showTyping(){
+  const d=document.createElement('div');
+  d.className='msg b';d.id='typ';
+  d.innerHTML='<div class="bbl typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  msgsEl.appendChild(d);scroll();
+}
+function removeTyping(){document.getElementById('typ')?.remove();}
+
+// ─── WA ESCALATION ───────────────────────────────────────────────────────────
+function buildWaEscalation(msg){
+  const a=document.createElement('a');
+  a.className='wa-escalate';
+  const encoded=encodeURIComponent(msg||'Hola, quiero asesorarme sobre muebles para mi casa');
+  a.href=waUrl+'?text='+encoded;
+  a.target='_blank';
+  a.rel='noopener';
+  a.innerHTML=`
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="#3D5C35"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    <div class="wa-escalate-text"><p>Hablar con una persona</p><p>Te respondemos por WhatsApp</p></div>`;
+  return a;
+}
+
+// ─── PRODUCT CARD ────────────────────────────────────────────────────────────
+function buildProductCard(p, single){
+  const card=document.createElement('div');
+  card.className=single?'rec-single':'pcard';
+
+  if(p.imagen){
+    const img=document.createElement('img');
+    img.className='pimg';img.src=p.imagen;img.alt=p.nombre;img.loading='lazy';
+    img.onerror=function(){this.parentNode.removeChild(this);};
+    card.appendChild(img);
+  }
+
+  const info=document.createElement('div');
+  info.className='pinfo';
+
+  let priceHtml='';
+  if(p.precio){
+    priceHtml=`<div class="pprice">$${fmt(p.precio)}</div>`;
+    if(p.transfer){
+      priceHtml+=`<div class="ptransfer">$${fmt(p.transfer)} con transferencia</div>`;
+      priceHtml+=`<div class="promo-tag">20% OFF efectivo o transferencia</div>`;
+    }
+    if(p.cuotas) priceHtml+=`<div class="pcuotas">${p.cuotas}</div>`;
+  } else if(p.apedido){
+    priceHtml=`<div class="apedido">A pedido y a medida — consultá precio</div>`;
+  } else if(p.rangeMin){
+    priceHtml=`<div class="pprice">$${fmt(p.rangeMin)} – $${fmt(p.rangeMax)}</div>`;
+    if(p.rangeMin>0) priceHtml+=`<div class="ptransfer">desde $${fmt(Math.round(p.rangeMin*0.8))} con transferencia</div><div class="promo-tag">20% OFF efectivo o transferencia</div>`;
+  }
+
+  const btns=p.precio
+    ?`<div class="pbtns"><button class="padd" onclick="addToCart(${p.id})">+ Lista</button><a href="${p.url}" target="_blank" rel="noopener" class="pver">Ver en tienda ↗</a></div>`
+    :`<div class="pbtns"><a href="${p.url}" target="_blank" rel="noopener" class="pver">Ver en tienda ↗</a></div>`;
+
+  info.innerHTML=`<div class="pcat">${p.cat}</div><div class="pname">${p.nombre}</div>${priceHtml}${btns}`;
+  card.appendChild(info);
+  return card;
+}
+
+// ─── PRODUCT GRID ────────────────────────────────────────────────────────────
+function buildProductGrid(catKey,budgetFilter,onNext){
+  const cat=CAT[catKey];
+  if(!cat) return document.createElement('div');
+  let items=[...cat.items];
+
+  if(budgetFilter){
+    items=items.filter(p=>{
+      if(p.apedido) return false;
+      const lo=p.precio||p.rangeMin||0;
+      const hi=p.precio||p.rangeMax||lo;
+      if(budgetFilter.min&&budgetFilter.max) return lo<=budgetFilter.max&&hi>=budgetFilter.min;
+      if(budgetFilter.min) return hi>=budgetFilter.min;
+      if(budgetFilter.max) return lo<=budgetFilter.max;
+      return true;
+    });
+  }
+
+  const wrap=document.createElement('div');wrap.style.width='100%';
+
+  if(!items.length){
+    const p=document.createElement('p');
+    p.style.cssText='font-size:12px;color:var(--text-l);padding:6px 0;font-style:italic';
+    p.textContent='No encontré productos en ese rango. ¿Querés probar con otro presupuesto?';
+    wrap.appendChild(p);
+    setTimeout(()=>addMsg('b',null,['Cambiar presupuesto','Ver todo sin filtro']),100);
+    return wrap;
+  }
+
+  const grid=document.createElement('div');
+  grid.className='pgrid';
+  items.slice(0,4).forEach(p=>grid.appendChild(buildProductCard(p,false)));
+  wrap.appendChild(grid);
+
+  const vm=document.createElement('a');
+  vm.className='ver-mas';vm.href=cat.url;vm.target='_blank';vm.rel='noopener';
+  vm.textContent=`Ver todo en ${cat.label} ↗`;
+  wrap.appendChild(vm);
+
+  if(onNext){
+    const nb=document.createElement('button');
+    nb.className='nbtn';nb.textContent='Ver siguiente ambiente →';
+    nb.onclick=()=>{nb.remove();onNext();};
+    wrap.appendChild(nb);
+  }
+  return wrap;
+}
+
+// ─── MOMENT CARDS ────────────────────────────────────────────────────────────
+function buildMomentCards(){
+  const wrap=document.createElement('div');
+  wrap.className='mcards';
+  const moments=[
+    {key:'cero',icon:'✨',t:'Estoy armando de cero',d:'Me mudé, empecé de cero o tengo un espacio vacío para decorar'},
+    {key:'cambiar',icon:'🔄',t:'Hay algo que quiero cambiar hace rato',d:'Sé qué me molesta, quiero resolver eso puntualmente'},
+    {key:'mejor',icon:'🏡',t:'Quiero que mi casa se vea mejor',d:'No sé bien por dónde empezar, pero siento que algo falta'},
+  ];
+  moments.forEach(m=>{
+    const c=document.createElement('div');
+    c.className='mcard';
+    c.innerHTML=`<div class="mc-icon">${m.icon}</div><div><p class="mc-t">${m.t}</p><p class="mc-d">${m.d}</p></div>`;
+    c.onclick=()=>selectMoment(m.key,m.t);
+    wrap.appendChild(c);
+  });
+  return wrap;
+}
+
+// ─── MODO "CAMBIAR" — preguntas de seguimiento ───────────────────────────────
+function buildCambiarFlow(){
+  const wrap=document.createElement('div');
+  wrap.className='fq-wrap';
+  const label=document.createElement('div');
+  label.className='fq-label';label.textContent='¿Qué es lo que querés cambiar?';
+  wrap.appendChild(label);
+  const grid=document.createElement('div');
+  grid.className='fq-opts';
+  const opts=[
+    {k:'living',txt:'Algo del living'},
+    {k:'dormitorio',txt:'Algo del dormitorio'},
+    {k:'comedor',txt:'Algo del comedor'},
+    {k:'escritorio',txt:'Mi escritorio'},
+    {k:'exterior',txt:'La terraza o exterior'},
+    {k:'entrada',txt:'La entrada'},
+  ];
+  opts.forEach(o=>{
+    const btn=document.createElement('button');
+    btn.className='fq-btn';btn.textContent=o.txt;
+    btn.onclick=()=>{
+      addMsg('u',o.txt);
+      // Recomendación única más destacada
+      showSingleRecommendation(o.k);
+    };
+    grid.appendChild(btn);
+  });
+  wrap.appendChild(grid);
+  return wrap;
+}
+
+function showSingleRecommendation(catKey){
+  currentCat=catKey;
+  const cat=CAT[catKey];
+  if(!cat){showCategory(catKey);return;}
+  // Tomar el producto con precio más representativo
+  const items=cat.items;
+  const featured=items.find(p=>p.precio)||items[0];
+  if(!featured){showCategory(catKey);return;}
+
+  addMsg('b',`Para tu ${cat.label.toLowerCase()}, esto es lo que más recomiendo:`,null,buildProductCard(featured,true));
+
+  // Si tiene más productos, mostrar el resto en grilla pequeña
+  const others=items.filter(p=>p.id!==featured.id).slice(0,3);
+  if(others.length){
+    const wrap=document.createElement('div');wrap.style.width='100%';
+    const lbl=document.createElement('p');
+    lbl.style.cssText='font-size:11px;color:var(--text-l);margin:10px 0 6px;font-style:italic';
+    lbl.textContent='También podría interesarte:';
+    wrap.appendChild(lbl);
+    const grid=document.createElement('div');
+    grid.className='pgrid';
+    others.forEach(p=>grid.appendChild(buildProductCard(p,false)));
+    const vm=document.createElement('a');
+    vm.className='ver-mas';vm.href=cat.url;vm.target='_blank';vm.rel='noopener';
+    vm.textContent=`Ver todo en ${cat.label} ↗`;
+    wrap.style.width='100%';
+    wrap.appendChild(grid);
+    wrap.appendChild(vm);
+    addMsg('b',null,null,wrap);
+  }
+
+  addMsg('b','¿Querés filtrar por presupuesto o hablar con alguien del equipo?',
+    ['Filtrar por presupuesto','¿Cómo pago?','¿Tienen envíos?']);
+  addMsg('b',null,null,buildWaEscalation(`Hola, estoy buscando algo para cambiar en mi ${cat.label.toLowerCase()}`));
+}
+
+// ─── MODO "MEJOR" — diagnóstico ──────────────────────────────────────────────
+function buildDiagnostic(){
+  const wrap=document.createElement('div');
+  wrap.className='diag';
+  const q=document.createElement('div');
+  q.className='diag-q';q.textContent='¿Qué te genera más esa sensación?';
+  wrap.appendChild(q);
+
+  const opts=['Iluminación pobre','Falta de orden','Los muebles no combinan','El espacio se ve vacío','Colores o texturas apagadas','No sé bien'];
+  const sel=new Set();
+  const row=document.createElement('div');row.className='diag-opts';
+
+  const nextBtn=document.createElement('button');
+  nextBtn.className='diag-next';nextBtn.textContent='Ver recomendaciones →';
+
+  opts.forEach(o=>{
+    const btn=document.createElement('button');
+    btn.className='diag-opt';btn.textContent=o;
+    btn.onclick=()=>{
+      sel.has(o)?(sel.delete(o),btn.classList.remove('sel')):(sel.add(o),btn.classList.add('sel'));
+      nextBtn.style.display=sel.size>0?'block':'none';
+    };
+    row.appendChild(btn);
+  });
+
+  nextBtn.onclick=()=>{
+    const selected=[...sel];
+    addMsg('u',selected.join(', '));
+    runDiagnosticResult(selected);
+  };
+
+  wrap.appendChild(row);wrap.appendChild(nextBtn);
+  return wrap;
+}
+
+function runDiagnosticResult(selected){
+  // Mapear respuestas a categorías relevantes
+  const catMap={
+    'Iluminación pobre':['living','dormitorio','escritorio'],
+    'Falta de orden':['entrada','escritorio','living'],
+    'Los muebles no combinan':['living','comedor'],
+    'El espacio se ve vacío':['living','dormitorio'],
+    'Colores o texturas apagadas':['living','dormitorio','comedor'],
+    'No sé bien':['living'],
+  };
+  const catCount={};
+  selected.forEach(s=>{
+    (catMap[s]||[]).forEach(c=>{catCount[c]=(catCount[c]||0)+1;});
+  });
+  const sorted=Object.entries(catCount).sort((a,b)=>b[1]-a[1]).map(([k])=>k);
+  const topCats=sorted.slice(0,2).filter(k=>CAT[k]);
+
+  if(!topCats.length){
+    showCategory('living');return;
+  }
+
+  addMsg('b',`Basándome en lo que me contás, los cambios más impactantes para tu casa serían en ${topCats.map(k=>CAT[k].label.toLowerCase()).join(' y ')}.`);
+  showMultiCategory(topCats);
+}
+
+// ─── FLUJO PRINCIPAL ─────────────────────────────────────────────────────────
+function welcome(){
+  addMsg('b','¡Hola! Soy el asistente de Maresias Deco. Antes de mostrarte productos, contame un poco tu situación.',null,buildMomentCards());
+}
+
+function selectMoment(key,title){
+  userMode=key;
+  addMsg('u',title);
+  if(key==='cero'){
+    addMsg('b','¡Buenísimo, empezar de cero tiene mucho potencial! ¿Qué ambientes tenés para decorar? Podés elegir varios.');
+    addMsg('b',null,null,buildAmbientSelector(true));
+  } else if(key==='cambiar'){
+    addMsg('b','Entendido. ¿Qué parte de la casa es?',null,buildCambiarFlow());
+  } else if(key==='mejor'){
+    addMsg('b','Vamos a encontrar qué cambio te genera más impacto. Dos preguntas rápidas.',null,buildDiagnostic());
+  }
+}
+
+function buildAmbientSelector(multi){
+  const ambients=[
+    {key:'living',label:'🛋 Living'},
+    {key:'dormitorio',label:'🛏 Dormitorio'},
+    {key:'comedor',label:'🍽 Comedor'},
+    {key:'escritorio',label:'💻 Escritorio'},
+    {key:'exterior',label:'🌿 Exterior'},
+    {key:'entrada',label:'🚪 Entrada / Hall'},
+  ];
+  const wrap=document.createElement('div');
+  const grid=document.createElement('div');grid.className='agrid';
+  const sel=new Set();
+  ambients.forEach(a=>{
+    const btn=document.createElement('button');
+    btn.className='abtn';btn.textContent=a.label;
+    if(multi){
+      btn.onclick=()=>{
+        sel.has(a.key)?(sel.delete(a.key),btn.classList.remove('sel')):(sel.add(a.key),btn.classList.add('sel'));
+        cb.style.display=sel.size>0?'block':'none';
+      };
+    } else {
+      btn.onclick=()=>{addMsg('u',a.label);showCategory(a.key);};
+    }
+    grid.appendChild(btn);
+  });
+  wrap.appendChild(grid);
+  let cb;
+  if(multi){
+    cb=document.createElement('button');
+    cb.className='confirm';cb.style.display='none';
+    cb.textContent='Ver productos para estos ambientes →';
+    cb.onclick=()=>{
+      const keys=[...sel];
+      addMsg('u',keys.map(k=>CAT[k]?.label||k).join(', '));
+      showMultiCategory(keys);
+    };
+    wrap.appendChild(cb);
+  }
+  return wrap;
+}
+
+function showMultiCategory(keys){
+  const queue=[...keys];
+  function next(){
+    if(!queue.length){
+      addMsg('b','¿Querés filtrar por presupuesto o consultarme algo más?',
+        ['Filtrar por presupuesto','¿Cómo pago?','¿Tienen envíos?']);
+      return;
+    }
+    const k=queue.shift();
+    currentCat=k;
+    const hasMore=queue.length>0;
+    addMsg('b',`Para tu <strong>${CAT[k]?.label.toLowerCase()}</strong>:`,null,buildProductGrid(k,null,hasMore?next:null));
+    if(!hasMore) setTimeout(()=>addMsg('b','¿Querés filtrar por presupuesto o consultarme algo más?',['Filtrar por presupuesto','¿Cómo pago?','¿Tienen envíos?']),150);
+  }
+  next();
+}
+
+function showCategory(catKey,budgetFilter){
+  if(!CAT[catKey]){addMsg('b','No encontré esa categoría.',ambChips());return;}
+  currentCat=catKey;
+  const intro=budgetFilter
+    ?`Para tu ${CAT[catKey].label.toLowerCase()} — ${budgetFilter.label.toLowerCase()}:`
+    :`Para tu ${CAT[catKey].label.toLowerCase()}:`;
+  addMsg('b',intro,null,buildProductGrid(catKey,budgetFilter,null));
+  addMsg('b','¿Querés filtrar por presupuesto o consultarme algo?',
+    ['Filtrar por presupuesto','¿Cómo pago?','¿Tienen envíos?','Cambiar ambiente']);
+}
+
+function addToCart(id){
+  for(const k in CAT){
+    const p=CAT[k].items?.find(x=>x.id===id);
+    if(p){
+      if(!cart.find(x=>x.id===id)){
+        cart.push(p);updateCartBar();
+        addMsg('b',`Agregué <strong>${p.nombre}</strong> a tu lista.`,['Seguir viendo','Ver mi lista']);
+      } else addMsg('b',`${p.nombre} ya está en tu lista.`);
+      return;
+    }
+  }
+}
+
+function updateCartBar(){
+  const info=document.getElementById('cart-info');
+  const total=cart.filter(p=>p.precio).reduce((s,p)=>s+p.precio,0);
+  info.textContent=cart.length?`${cart.length} ítem${cart.length>1?'s':''} · $${fmt(total)}`:'Lista vacía';
+}
+
+function showCart(){
+  if(!cart.length){addMsg('b','Tu lista está vacía.',ambChips());return;}
+  let txt='Tu lista:\n\n';let total=0;
+  cart.forEach(p=>{txt+=`• ${p.nombre}`;if(p.precio){txt+=` — $${fmt(p.precio)}`;total+=p.precio;}txt+='\n';});
+  if(total>0) txt+=`\nTotal estimado: $${fmt(total)}\nCon transferencia: $${fmt(Math.round(total*0.8))} (20% OFF)`;
+  addMsg('b',txt,['Seguir viendo','Vaciar lista']);
+  addMsg('b',null,null,buildWaEscalation('Hola, tengo una lista armada y quiero consultarles antes de comprar'));
+}
+
+function ambChips(){return['🛋 Living','🛏 Dormitorio','🍽 Comedor','💻 Escritorio','🌿 Exterior','🚪 Entrada'];}
+
+// ─── INTENT ──────────────────────────────────────────────────────────────────
+function detectIntent(m){
+  const s=m.toLowerCase();
+  const ambMap={living:'living',salon:'living','salón':'living',dormitorio:'dormitorio',cuarto:'dormitorio','habitaci':'dormitorio',cama:'dormitorio',comedor:'comedor',escritorio:'escritorio','home office':'escritorio',exterior:'exterior',terraza:'exterior','balc':'exterior',patio:'exterior',entrada:'entrada',hall:'entrada',ingreso:'entrada'};
+  for(const [k,v] of Object.entries(ambMap)) if(s.includes(k)) return {type:'cat',key:v};
+  if(/mesa.*luz|luz.*mesa|mesita|noche/.test(s)) return {type:'cat',key:'dormitorio'};
+  if(/presupuesto|cu[aá]nto.*(cuesta|vale|sale)|rang|precio/.test(s)) return {type:'ask_budget'};
+  if(/filtrar.?presupuesto|por.?presupuesto/.test(s)) return {type:'ask_budget'};
+  if(/env[ií]o|despacho|llega|entrega/.test(s)) return {type:'faq',key:'envio'};
+  if(/pago|cuota|tarjeta|transferencia|descuento|efectivo/.test(s)) return {type:'faq',key:'pago'};
+  if(/personaliz|medida|adapt|encarg/.test(s)) return {type:'faq',key:'personalizacion'};
+  if(/como.?comprar/.test(s)) return {type:'faq',key:'como_comprar'};
+  if(/mayorista/.test(s)) return {type:'faq',key:'mayoristas'};
+  if(/garant[ií]a/.test(s)) return {type:'faq',key:'garantia'};
+  if(/lista|carrito|compras/.test(s)) return {type:'cart'};
+  if(/vaciar/.test(s)) return {type:'clear_cart'};
+  if(/cambiar.?ambiente|otro.?ambiente/.test(s)) return {type:'show_cats'};
+  if(/sin.?filtro|ver.?todo/.test(s)) return {type:'cat_nofilter'};
+  if(/hola|buenas|buen.?d[ií]a/.test(s)) return {type:'greeting'};
+  return {type:'ai'};
+}
+
+// ─── AI FALLBACK ─────────────────────────────────────────────────────────────
+async function callAI(msg){
+  aiHistory.push({role:'user',content:msg});
+  const cats=Object.values(CAT).map(c=>c.label).join(', ');
+  const sys=`Sos el asistente de Maresias Deco (${TIENDA.url||'www.maresiasdeco.com.ar'}), tienda argentina de muebles y decoración minimalista con materiales naturales. Categorías: ${cats}. Respondés en español rioplatense, tono cálido y empático. Entendés que la gente no compra muebles, compra la sensación de tener una casa que la representa. Máximo 3 oraciones. Sin viñetas. Si preguntan por un producto específico, sugerí la categoría correspondiente. Siempre mencioná que tienen 20% OFF con transferencia si viene al caso.`;
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:300,system:sys,messages:aiHistory})});
+    if(!res.ok) throw new Error('err');
+    const d=await res.json();
+    const reply=d.content?.[0]?.text;
+    if(!reply) throw new Error('err');
+    aiHistory.push({role:'assistant',content:reply});
+    return {ok:true,text:reply};
+  }catch{return {ok:false};}
+}
+
+// ─── SEND ────────────────────────────────────────────────────────────────────
+async function send(){
+  const text=txtEl.value.trim();if(!text)return;
+  txtEl.value='';
+  addMsg('u',text);
+  const intent=detectIntent(text);
+  if(intent.type==='greeting'){welcome();return;}
+  if(intent.type==='cat'){showCategory(intent.key);return;}
+  if(intent.type==='ask_budget'){
+    addMsg('b','¿En qué rango de presupuesto estás pensando?',null,buildBudgetOptions());return;
+  }
+  if(intent.type==='faq'){addMsg('b',FAQS[intent.key],['¿Algo más?','Ver productos','Cambiar ambiente']);return;}
+  if(intent.type==='cart'){showCart();return;}
+  if(intent.type==='clear_cart'){cart=[];updateCartBar();addMsg('b','Lista vaciada.',ambChips());return;}
+  if(intent.type==='show_cats'){addMsg('b','¿Qué ambiente te interesa?',null,buildAmbientSelector(false));return;}
+  if(intent.type==='cat_nofilter'){if(currentCat)showCategory(currentCat);else addMsg('b','¿Qué ambiente?',null,buildAmbientSelector(false));return;}
+
+  showTyping();
+  const result=await callAI(text);
+  removeTyping();
+  if(result.ok){
+    addMsg('b',result.text,['Ver productos','¿Cómo pago?','¿Tienen envíos?','Cambiar ambiente']);
+  } else {
+    addMsg('b','No pude conectarme ahora. ¿Querés que te ayude con algo de esto?',
+      lastChips.length?lastChips:ambChips());
+  }
+}
+
+function buildBudgetOptions(){
+  const wrap=document.createElement('div');wrap.className='brow';
+  BUDGETS.forEach(b=>{
+    const btn=document.createElement('button');btn.className='bopt';btn.textContent=b.label;
+    btn.onclick=()=>{addMsg('u',b.label);if(currentCat)showCategory(currentCat,b);else addMsg('b','¿Para qué ambiente?',null,buildAmbientSelector(false));};
+    wrap.appendChild(btn);
+  });
+  return wrap;
+}
+
+init();
+</script>
+</body>
+</html>
